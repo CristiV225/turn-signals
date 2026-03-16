@@ -1,4 +1,4 @@
-# Car Turn Signals - FPGA
+# Automotive Turn Signals - FPGA
 
 A finite state machine (FSM) implemented in VHDL on a Basys 3 FPGA board, simulating a car turn signal system.
 
