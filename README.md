@@ -24,6 +24,14 @@ The project models the behavior of car turn signals using a synchronous FSM. The
 | HAZARD1 / HAZARD2 / HAZARD3 | Hazard light stages |
 | LEFT_UP_SIG / RIGHT_UP_SIG | Upper signal modes |
 
+## State Transition Diagram
+
+The following diagram illustrates the finite state machine transitions between the idle state, turn signal states, and hazard light stages.
+
+<p align="center">
+  <img src="transition-diagram.jpg" width="650">
+</p>
+
 ## Inputs
 
 | Switch | Function |
