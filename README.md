@@ -29,7 +29,7 @@ The project models the behavior of car turn signals using a synchronous FSM. The
 The following diagram illustrates the finite state machine transitions between the idle state, turn signal states, and hazard light stages.
 
 <p align="center">
-  <img src="transition-diagram" width="650">
+  <img src="transition-diagram.jpg" width="650">
 </p>
 
 ## Inputs
