@@ -1,54 +1,137 @@
-# Automotive Turn Signals - FPGA
+# MiniBank -- Starter Project
 
-A finite state machine (FSM) implemented in VHDL on a Basys 3 FPGA board, simulating an automotive turn signal system.
+## What's Pre-configured
 
-## Description
+The starter project has the following already set up — you can start implementing the API immediately without any additional configuration.
 
-The project models the behavior of car turn signals using a synchronous FSM. The system takes switch inputs and drives LED outputs to simulate left turn, right turn, hazard lights, and upper signals.
+| Item | Detail |
+|------|--------|
+| Spring Boot 4.0.3 / Java 25 | Parent POM `spring-boot-starter-parent:4.0.3`, `java.version=25` |
+| Spring MVC | `spring-boot-starter-webmvc` (renamed from `spring-boot-starter-web` in Spring Boot 4) |
+| H2 Database | In-memory database `jdbc:h2:mem:minibank` with `ddl-auto: create-drop` — schema auto-created from JPA entities |
+| H2 Console | `spring-boot-h2console` — accessible at `/h2-console` during development |
+| Exchange Rates | `exchange-rates.yml` loaded via `spring.config.import` — mapped to `exchange.rates.*` properties |
+| Actuator Health | `GET /actuator/health` responds `{"status":"UP"}` — used by the automated evaluator to check application readiness |
+| Package Structure | Empty `controller/`, `model/`, `repository/`, `service/` packages with `.gitkeep` files — ready for your implementation |
 
-## Features
+---
 
-- Left and right turn signals with sequential LED activation
-- Hazard lights with 3-stage animation
-- Upper left and upper right signal modes
-- Frequency divider for timing control
-- Reset functionality
+## Getting Started
 
-## States
+### Prerequisites
 
-| State | Description |
-|-------|-------------|
-| idle | No signal active |
-| LAon / LALBon / LALBLCon | Left turn signal stages |
-| RAon / RARBon / RARBRCon | Right turn signal stages |
-| HAZARD1 / HAZARD2 / HAZARD3 | Hazard light stages |
-| LEFT_UP_SIG / RIGHT_UP_SIG | Upper signal modes |
+- Java 25
+- Maven 3.9+
 
-## State Transition Diagram
+### Running the Application
 
-The following diagram illustrates the finite state machine transitions between the idle state, turn signal states, and hazard light stages.
+```bash
+cd minibank-starter
+mvn spring-boot:run
+```
 
-<p align="center">
-  <img src="transitions-diagram.jpg" width="650">
-</p>
+Verify startup:
 
-## Inputs
+```bash
+curl http://localhost:8080/actuator/health
+# Expected: {"status":"UP"}
+```
 
-| Switch | Function |
-|--------|----------|
-| sw(0) | Hazard lights |
-| sw(1) | Left turn signal |
-| sw(2) | Right turn signal |
-| sw(3) | Upper left signal |
-| sw(4) | Upper right signal |
+---
 
-## Technologies
+## H2 Console
 
-- VHDL
-- Vivado Design Suite
-- Basys 3 FPGA board
+The in-memory H2 database is accessible during development at:
 
-## Authors
+```
+http://localhost:8080/h2-console
+```
 
-- Fit Nicolae
-- Vultur Cristian
+Connection settings:
+- JDBC URL: `jdbc:h2:mem:minibank`
+- Username: `sa`
+- Password: (leave empty)
+
+---
+
+## Exchange Rates
+
+Pinned currency exchange rates are loaded from `src/main/resources/exchange-rates.yml`. The rates in that file are fixed and will be used by the automated test suite — do not modify them.
+
+---
+
+## Project Structure
+
+The starter project provides an empty package layout to help organise your implementation:
+
+- `ro.axonsoft.eval.minibank` — root package with `MinibankApplication.java` (Spring Boot entry point — do not move or rename this class)
+  - `controller/` — REST controllers for the API endpoints
+  - `model/` — JPA entities and DTOs
+  - `repository/` — Spring Data JPA repositories
+  - `service/` — Business logic services
+
+You are free to create additional packages as needed. The provided structure is a suggestion, not a constraint.
+
+---
+
+## Build Environment
+
+Your submission is compiled and tested in an **offline** environment with no network access. The starter dependencies are always available. The following additional libraries are also pre-installed — you may add any of them to your `pom.xml` without specifying a version (managed by the Spring Boot 4.0.3 BOM unless noted):
+
+**Spring Boot Starters**
+
+| Artifact | Scope |
+|----------|-------|
+| `spring-boot-starter-test` | test |
+| `spring-boot-starter-validation` | compile |
+| `spring-boot-starter-webmvc` | compile |
+| `spring-boot-starter-security` | compile |
+| `spring-boot-starter-cache` | compile |
+| `spring-boot-starter-aop` | compile |
+| `spring-boot-devtools` | provided |
+
+**Utility Libraries**
+
+| Library | Maven Coordinates | Version |
+|---------|-------------------|---------|
+| Apache Commons Lang | `org.apache.commons:commons-lang3` | BOM |
+| Apache Commons IO | `commons-io:commons-io` | 2.18.0 |
+| Apache Commons Text | `org.apache.commons:commons-text` | 1.13.0 |
+| Apache Commons Collections | `org.apache.commons:commons-collections4` | 4.5.0 |
+| Apache Commons Validator | `commons-validator:commons-validator` | 1.9.0 |
+| Google Guava | `com.google.guava:guava` | 33.4.0-jre |
+| Gson | `com.google.code.gson:gson` | 2.11.0 |
+
+**Code Generation & Mapping**
+
+| Library | Maven Coordinates | Version |
+|---------|-------------------|---------|
+| Lombok | `org.projectlombok:lombok` | BOM |
+| MapStruct | `org.mapstruct:mapstruct` | 1.6.3 |
+| MapStruct Processor | `org.mapstruct:mapstruct-processor` | 1.6.3 |
+| ModelMapper | `org.modelmapper:modelmapper` | 3.2.2 |
+
+**Validation**
+
+| Library | Maven Coordinates | Version |
+|---------|-------------------|---------|
+| Jakarta Validation API | `jakarta.validation:jakarta.validation-api` | BOM |
+| Hibernate Validator | `org.hibernate.validator:hibernate-validator` | BOM |
+
+> **Important:** The build environment has no network access. If you add a dependency not listed above, your build will fail and functional tests will score zero.
+
+---
+
+## Submission Instructions
+
+Your submission will be evaluated automatically by a test suite.
+
+Submit your implementation as a ZIP archive through the evaluation platform before the deadline shown on your dashboard.
+
+You are encouraged to use any tools, including AI assistants.
+
+---
+
+## Full Specification
+
+For the complete API specification and business rules, refer to the challenge page on the evaluation platform.
